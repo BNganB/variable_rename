@@ -2,12 +2,7 @@ import obfuscate_me as tf
 import re
 import random
 
-def gen_ruski(char_list):
-    x = random.choice(char_list)
-    char_list.remove(x)
-    return x
-
-def gen_china(char_list):
+def gen_char(char_list):
     x = random.choice(char_list)
     char_list.remove(x)
     return x
@@ -35,7 +30,7 @@ pattern = r'(?<!import)\s+(\w+)\s*='
 only_variables = [match for match in re.findall(pattern, new_file_raw) if match not in remove_me]
 
 for i in range(len(only_variables)):
-    new_file_raw = re.sub(r'\b{}\b'.format(only_variables[i]), gen_china(char_list_china), new_file_raw) #CHANGE gen_x to change language
+    new_file_raw = re.sub(r'\b{}\b'.format(only_variables[i]), gen_char(char_list_china), new_file_raw) #CHANGE gen_x to change language
 
 with open("obfuscated.py", "w") as f:
     f.write(new_file_raw)
