@@ -1,27 +1,14 @@
 import obfuscate_me as tf
 import re
-import random
-
-def gen_char(char_list):
-    x = random.choice(char_list)
-    char_list.remove(x)
-    return x
-
-start_ruski = ord('А')
-end_ruski = ord('я')
-char_list_ruski = [chr(code) for code in range(start_ruski, end_ruski + 1)]
-
-start_china = ord('\u4E00')  
-end_china = ord('\u9FFF')
-char_list_china = [chr(code) for code in range(start_china, end_china + 1)]
+import translate_vari as tv
 
 unclean_variables = dir(tf)
 remove_me = ['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'global_vars', 'local_vars']
 
-with open("obfuscate_me.py", "r") as f:
-    content = f.read()
+with open("obfuscate_1.py", "r") as f:
+    old_file_raw = f.read()
 
-new_file_raw = content
+new_file_raw = old_file_raw
 
 # exclude imports, will break program
 pattern = r'(?<!import)\s+(\w+)\s*='
@@ -29,8 +16,16 @@ pattern = r'(?<!import)\s+(\w+)\s*='
 # get valid renaming targets
 only_variables = [match for match in re.findall(pattern, new_file_raw) if match not in remove_me]
 
+def get_only_translated_variables(only_variables):
+    only_translated_variables = []
+    for variable in only_variables:
+        only_translated_variables.append(tv.translate_given_variable(variable))
+
+    return only_translated_variables
+
+
 for i in range(len(only_variables)):
-    new_file_raw = re.sub(r'\b{}\b'.format(only_variables[i]), gen_char(char_list_china), new_file_raw) #CHANGE gen_x to change language
+    new_file_raw = re.sub(r'\b{}\b'.format(only_variables[i]), get_only_translated_variables(only_variables)[i], new_file_raw) #CHANGE gen_x to change language
 
 with open("obfuscated.py", "w") as f:
     f.write(new_file_raw)
