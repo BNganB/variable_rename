@@ -12,13 +12,14 @@ def translate_given_variable(variable):
     translator = Translator(to_lang = "ru")
     split_words = variable.split("_")
     translated_words = []
+    shitty_chars = [".", ","]
     for i in split_words:
         if len(i) == 1:
             translated_words.append(gen_char(char_list_ruski))
         else:
             translated_word = translator.translate(i)
             translated_words.append(translated_word)
-    filtered_translated_array = [x for x in translated_words if x != "."]
+    filtered_translated_array = [x for x in translated_words if x not in shitty_chars]
     final_str = "_".join(filtered_translated_array)
 
 
