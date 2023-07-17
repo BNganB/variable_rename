@@ -5,7 +5,7 @@ import translate_vari as tv
 unclean_variables = dir(tf)
 remove_me = ['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'global_vars', 'local_vars']
 
-with open("obfuscate_1.py", "r") as f:
+with open("obfuscate_me.py", "r") as f:
     old_file_raw = f.read()
 
 new_file_raw = old_file_raw

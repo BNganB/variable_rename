@@ -1,3 +1,7 @@
+#Bylat-ify
+
+Translates Python file variable names into russian using Google Translate API.
+
 >input = obfuscate_me.py
 
 >output = obfuscated.py
